@@ -1,7 +1,7 @@
 module Enumerable
   # my_each
   def my_each
-    to_enum(:my_each) unless block_given?
+    return to_enum(:my_each) unless block_given?
     if self.instance_of?(Array)
       element = self
     else
@@ -18,7 +18,7 @@ module Enumerable
 
   # my_each_with_index
   def my_each_with_index
-    to_enum(:my_each_with_index) unless block_given?
+    return to_enum(:my_each_with_index) unless block_given?
     element = to_a
     k = 0
     while k < element.length
@@ -30,7 +30,7 @@ module Enumerable
 
   # my_select
   def my_select
-    to_enum(:my_select) unless block_given?
+    return to_enum(:my_select) unless block_given?
     arr = Array.new
     my_each {|i| arr << i if yield i}
     arr
@@ -94,6 +94,6 @@ module Enumerable
   end
 
   def multiply_els(items)
-    items.my_inject { |result, item| result * item }
+    items.my_inject {:*}
   end
 end
