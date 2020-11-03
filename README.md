@@ -1,6 +1,5 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
-![](https://img.shields.io/badge/Algorithms-orange)
-![](https://img.shields.io/badge/Bubble-Sort-purple)
+![](https://img.shields.io/badge/Enumerable-purple)
 ![](https://img.shields.io/badge/Ruby-red)
 
 # Enumerable Module Implementation
