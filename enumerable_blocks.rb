@@ -2,11 +2,12 @@ module Enumerable
   # my_each
   def my_each
     return to_enum(:my_each) unless block_given?
-    if self.instance_of?(Array)
-      element = self
-    else
-      element = to_a
-    end
+
+    element = if instance_of?(Array)
+                self
+              else
+                to_a
+              end
 
     k = 0
     while k < element.length
@@ -19,6 +20,7 @@ module Enumerable
   # my_each_with_index
   def my_each_with_index
     return to_enum(:my_each_with_index) unless block_given?
+
     element = to_a
     k = 0
     while k < element.length
@@ -31,8 +33,9 @@ module Enumerable
   # my_select
   def my_select
     return to_enum(:my_select) unless block_given?
-    arr = Array.new
-    my_each {|i| arr << i if yield i}
+
+    arr = []
+    my_each { |i| arr << i if yield i }
     arr
   end
 
@@ -54,20 +57,19 @@ module Enumerable
   end
 
   def my_count(param = nil)
-    count = 0
-    :my_count.length unless block_given?
-    if param.instance_of?(Number)
-      each do |element|
-        count += 1 if element == param
-      end
-      count
+    if !block_given? && param.nil?
+      count = to_a.length
+    elsif block_given?
+      my_each { |element| count += 1 if yield element }
     else
-      my_each { |element| count += 1 if yield(element) }
+      count = my_select { |element| element == param }.length
     end
+    count
   end
 
   def my_map(param = nil)
-    to_enum(:my_map) unless block_given? || param
+    return to_enum(:my_map) unless block_given? || param
+
     arr = []
     if param.nil?
       my_each { |element| arr << yield(element) }
@@ -92,8 +94,8 @@ module Enumerable
     end
     param
   end
+end
 
-  def multiply_els(items)
-    items.my_inject {:*}
-  end
+def multiply_els(items)
+  items.my_inject(:*)
 end
