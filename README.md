@@ -4,7 +4,18 @@
 
 # Enumerable Module Implementation
 
-This is a re-implementation of the [Enumerable](https://ruby-doc.org/core-2.7.2/Enumerable.html) module created for learning purposes.
+This is a re-implementation of the [Enumerable](https://ruby-doc.org/core-2.7.2/Enumerable.html) module created for learning purposes. 
+
+This module implements: 
+- #my_each 
+- #my_eacn_with_index
+- #my_select
+- #my_all
+- #my_any
+- #my_none
+- #my_count
+- #my_map
+- #my_inject
 
 ## Built With
 
@@ -13,7 +24,8 @@ This is a re-implementation of the [Enumerable](https://ruby-doc.org/core-2.7.2/
 
 ##  Getting Started
 
-To run the code simply download the repository by either cloning it or downloading it as a zip file and then `require './enumerable_blocks.rb'` from the Building_Blocks-Enumerables directory.
+- Get the repository by either cloning it or downloading it as a zip file
+- Use irb to `require './enumerable_blocks.rb'` from the Building_Blocks-Enumerables directory or require it from another Ruby script.
 
 ## Authors
 

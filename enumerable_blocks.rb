@@ -114,7 +114,11 @@ module Enumerable
   def my_count(param = nil)
     count = 0
     if !block_given? && param.nil?
-      count = length
+      count = if instance_of?(Array)
+        lenght
+      else
+        to_a.length
+      end
     elsif block_given?
       my_each { |element| count += 1 if yield element }
     else
