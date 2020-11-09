@@ -39,47 +39,47 @@ module Enumerable
     arr
   end
 
-#my_all?
-def my_all?(argument = nil)
-  if block_given? && !argument.nil?
-  return false unless my_all?(argument) && my_all?
-end
-if block_given?       
-  my_each { |item| return false if yield(item) }
-elsif !block_given? && argument.nil?
-  my_each {|item| return true unless argument == false || argument.nil?}
-elsif !block_given? && argument.nil?
-  my_each {|item| return false if item == false || item.nil?}
-elsif argument.is_a?(Class)
-  my_each {|item| return false unless argument.is_a?(Class)}
-elsif argument == Regexp
-  my_each {|item| return true if item.match(Regexp)}
-elsif argument == Regexp
-  my_each {|item| return false unless item.match(Regexp)}
-else
-  my_each { |item| return false if item != argument }
-end
-true
-end
+  # my_all?
+  def my_all?(argument = nil)
+    if block_given? && !argument.nil?
+      return false unless my_all?(argument) && my_all?
+    end
+    if block_given?
+      my_each { |item| return false if yield(item) }
+    elsif !block_given? && argument.nil?
+      my_each { |_item| return true unless argument == false || argument.nil? }
+    elsif !block_given? && argument.nil?
+      my_each { |item| return false if item == false || item.nil? }
+    elsif argument.is_a?(Class)
+      my_each { |_item| return false unless argument.is_a?(Class) }
+    elsif argument == Regexp
+      my_each { |item| return true if item.match(Regexp) }
+    elsif argument == Regexp
+      my_each { |item| return false unless item.match(Regexp) }
+    else
+      my_each { |item| return false if item != argument }
+    end
+    true
+  end
 
-#my_any?
-def my_any?(argument = nil)
-  if block_given? && !argument.nil?
-    return true if my_any?(argument) && my_any?
+  # my_any?
+  def my_any?(argument = nil)
+    if block_given? && !argument.nil?
+      return true if my_any?(argument) && my_any?
+    end
+    if block_given? && !argument.nil?
+      my_each { |item| return true if yield(item) }
+    elsif argument.nil?
+      my_each { |item| return true if item }
+    elsif argument.is_a?(Class)
+      my_each { |item| return true if item.instance_of?(argument) }
+    elsif argument.instance_of?(Regexp)
+      my_each { |item| return true if item.match(argument) }
+    else
+      my_each { |item| return true if item == argument && item.class <= argument.class }
+    end
+    false
   end
-  if block_given? &&!argument.nil?
-    my_each { |item| return true if yield(item)}
-  elsif argument.nil?
-    my_each { |item| return true if item }
-  elsif argument.is_a?(Class)
-    my_each { |item| return true if item.class == argument }
-  elsif argument.class == Regexp
-    my_each { |item| return true if item.match(argument) }
-  else
-    my_each { |item| return true if item == argument && item.class <= argument.class} 
-  end
-  false
-end
 
   # my_none?
   def my_none?(argument = nil)
@@ -89,31 +89,32 @@ end
     if block_given?
       my_each { |item| return false if yield(item) }
     elsif !block_given? && argument.nil?
-        my_each { |item| return false if item }
+      my_each { |item| return false if item }
     elsif argument.is_a?(Class)
-        my_each { |item| return true unless argument.is_a?(Class)}
-       
+      my_each { |_item| return true unless argument.is_a?(Class) }
+
     elsif argument.is_a?(Numeric)
-        my_each { |item| return true unless argument.is_a?(Numeric)}
+      my_each { |_item| return true unless argument.is_a?(Numeric) }
 
     elsif argument.is_a?(Class)
-        my_each { |item| return false if item.is_a?(Class)}
+      my_each { |item| return false if item.is_a?(Class) }
 
     elsif argument == Regexp
-        my_each { |item| return true unless argument.match(Regexp) }
+      my_each { |_item| return true unless argument.match(Regexp) }
 
     elsif argument == Regexp
-        my_each { |item| return false if item.match(Regexp)}
-    
+      my_each { |item| return false if item.match(Regexp) }
+
     else
-        my_each { |item| return false if item == argument && item.class <= argument.class }     
-    end     
-    true   
+      my_each { |item| return false if item == argument && item.class <= argument.class }
+    end
+    true
   end
 
   def my_count(param = nil)
+    count = 0
     if !block_given? && param.nil?
-      count = to_a.length
+      count = length
     elsif block_given?
       my_each { |element| count += 1 if yield element }
     else
