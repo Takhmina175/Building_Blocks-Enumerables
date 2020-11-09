@@ -1,3 +1,8 @@
+# rubocop:disable Style/CaseEquality
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/ModuleLength
+
 module Enumerable
   # my_each
   def my_each
@@ -159,3 +164,8 @@ end
 def multiply_els(items)
   items.my_inject(:*)
 end
+
+# rubocop:disable Style/CaseEquality
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/ModuleLength
