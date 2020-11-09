@@ -1,7 +1,7 @@
-# rubocop:disable Style/CaseEquality
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
 # rubocop:disable Metrics/ModuleLength
+# rubocop:disable Metrics/MethodLength
 
 module Enumerable
   # my_each
@@ -120,10 +120,10 @@ module Enumerable
     count = 0
     if !block_given? && param.nil?
       count = if instance_of?(Array)
-        lenght
-      else
-        to_a.length
-      end
+                length
+              else
+                to_a.length
+              end
     elsif block_given?
       my_each { |element| count += 1 if yield element }
     else
@@ -165,7 +165,7 @@ def multiply_els(items)
   items.my_inject(:*)
 end
 
-# rubocop:disable Style/CaseEquality
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
 # rubocop:disable Metrics/ModuleLength
+# rubocop:disable Metrics/MethodLength
