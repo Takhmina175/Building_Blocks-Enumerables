@@ -45,19 +45,18 @@ module Enumerable
       return false unless my_all?(argument) && my_all?
     end
     if block_given?
-      my_each { |item| return false if yield(item) }
-    elsif !block_given? && argument.nil?
-      my_each { |_item| return true unless argument == false || argument.nil? }
-    elsif !block_given? && argument.nil?
-      my_each { |item| return false if item == false || item.nil? }
+      my_each { |item| return false unless yield(item) }
+    elsif argument.nil?
+      my_each { |item| return false unless item }
+
     elsif argument.is_a?(Class)
-      my_each { |_item| return false unless argument.is_a?(Class) }
-    elsif argument == Regexp
-      my_each { |item| return true if item.match(Regexp) }
-    elsif argument == Regexp
-      my_each { |item| return false unless item.match(Regexp) }
+      my_each { |item| return false unless item.class.is_a?(Class)} 
+
+    elsif argument.class == Regexp
+      my_each { |item| return false unless item.match(argument) }
+
     else
-      my_each { |item| return false if item != argument }
+      my_each { |item| return false unless item == argument && item.class <= argument.class }
     end
     true
   end
@@ -67,16 +66,17 @@ module Enumerable
     if block_given? && !argument.nil?
       return true if my_any?(argument) && my_any?
     end
-    if block_given? && !argument.nil?
+
+    if block_given?
       my_each { |item| return true if yield(item) }
     elsif argument.nil?
-      my_each { |item| return true if item }
-    elsif argument.is_a?(Class)
-      my_each { |item| return true if item.instance_of?(argument) }
-    elsif argument.instance_of?(Regexp)
+      my_each { |item| return true if item}
+    elsif argument.is_a? (Class)
+      my_each { |item| return true if item.class.is_a?(Class) }
+    elsif argument.class == Regexp
       my_each { |item| return true if item.match(argument) }
     else
-      my_each { |item| return true if item == argument && item.class <= argument.class }
+      my_each { |item| return true if item == argument}
     end
     false
   end
@@ -88,22 +88,14 @@ module Enumerable
     end
     if block_given?
       my_each { |item| return false if yield(item) }
-    elsif !block_given? && argument.nil?
+    elsif argument.nil?
       my_each { |item| return false if item }
-    elsif argument.is_a?(Class)
-      my_each { |_item| return true unless argument.is_a?(Class) }
-
-    elsif argument.is_a?(Numeric)
-      my_each { |_item| return true unless argument.is_a?(Numeric) }
 
     elsif argument.is_a?(Class)
-      my_each { |item| return false if item.is_a?(Class) }
+      my_each { |item| return false if item.class.is_a?(Class) }
 
-    elsif argument == Regexp
-      my_each { |_item| return true unless argument.match(Regexp) }
-
-    elsif argument == Regexp
-      my_each { |item| return false if item.match(Regexp) }
+    elsif argument.class == Regexp
+      my_each { |item| return false if item.match(argument) }
 
     else
       my_each { |item| return false if item == argument && item.class <= argument.class }
