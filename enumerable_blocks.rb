@@ -1,7 +1,6 @@
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
 # rubocop:disable Metrics/ModuleLength
-# rubocop:disable Metrics/MethodLength
 
 module Enumerable
   # my_each
@@ -71,7 +70,7 @@ module Enumerable
     if block_given?
       my_each { |item| return true if yield(item) }
     elsif argument.nil?
-      my_each { |item| return true if item}
+      my_each { |item| return true if item }
     elsif argument.is_a?(Class)
       my_each { |item| return true if item.class.is_a?(Class) }
     elsif argument.class == Regexp
@@ -156,4 +155,3 @@ end
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Metrics/ModuleLength
-# rubocop:enable Metrics/MethodLength
