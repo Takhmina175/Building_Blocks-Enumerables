@@ -73,9 +73,9 @@ module Enumerable
     elsif argument.nil?
       my_each { |item| return true if item }
     elsif argument.is_a?(Class)
-      my_each { |item| return true if item.class.is_a?(Class) }
+      my_each { |item| return true if [item.class, item.class.superclass].include?(argument) }
     elsif argument.class == Regexp
-      my_each { |item| return true if item.match(argument) }
+      my_each { |item| return true if argument.match(item.to_s) }
     else
       my_each { |item| return true if item == argument }
     end
