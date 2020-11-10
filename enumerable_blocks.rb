@@ -1,6 +1,7 @@
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
 # rubocop:disable Metrics/ModuleLength
+# rubocop:disable Style/NegatedUnless
 
 module Enumerable
   # my_each
@@ -53,19 +54,9 @@ module Enumerable
     elsif argument.nil?
       my_each { |item| return false unless item }
     elsif argument.is_a?(Class)
-      my_each do |item|
-        if !item.class.is_a?(Class)
-          return false
-        end
-      end
-      # my_each { |item| return false unless !item.class.is_a?(Class) }
+      my_each { |item| return false unless !item.class.is_a?(Class) }
     elsif argument.class == Regexp
-      my_each do |item|
-        if !item.match(argument)
-          return false
-        end
-      end
-      # my_each { |item| return false unless !item.match(argument) }
+      my_each { |item| return false unless !item.match(argument) }
     else
       my_each { |item| return false unless item == argument && item.class <= argument.class }
     end
@@ -165,3 +156,4 @@ end
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Metrics/ModuleLength
+# rubocop:enable Style/NegatedUnless
