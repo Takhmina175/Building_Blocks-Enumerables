@@ -6,6 +6,7 @@ describe 'Enumerable' do
   let(:arr_hash) { { firstname: 'Mina', lastname: 'Ahmad' } }
   let(:range) { (5..10) }
 
+  # testing code for my_each method
   describe '#my_each' do
     it 'returns all the elements of an array' do
       expect(arr_num.my_each { |n| puts n }).to eq(arr_num)
@@ -19,7 +20,7 @@ describe 'Enumerable' do
       expect(arr_hash.my_each { |n| puts n }).to eq(arr_hash)
     end
   end
-
+  # testing code for my_each_with_index method
   describe '#my_each_with_index' do
     it 'returns two arguments, the item and its index.' do
       expect(arr_num.my_each_with_index { |num, index| puts "#{num}, #{index}" }).to eq(arr_num)
@@ -33,7 +34,7 @@ describe 'Enumerable' do
       expect(arr_hash.my_each_with_index { |num, index| puts "#{num}, #{index}" }).to eq(arr_hash)
     end
   end
-
+  # testing code for my_select method
   describe '#my_select' do
     it 'filter a new array and return elements that meet the condition' do
       expect(arr_num.my_select { |n| n > 1 }).to eq([2, 3])
@@ -47,7 +48,7 @@ describe 'Enumerable' do
       expect(arr_hash.my_select { |_k, v| v == 'Mina' }).to eq([[:firstname, 'Mina']])
     end
   end
-
+  # testing code for my_all? method
   describe '#my_all?' do
     it 'returns true if the block never returns false or nil.' do
       expect(arr_num.my_all? { |n| n > 0 }).to eq(true)
@@ -57,7 +58,7 @@ describe 'Enumerable' do
       expect(arr_strings.my_all? { |n| n.size > 2 }).to eq(true)
     end
   end
-
+  # testing code for my_any? method
   describe '#my_any?' do
     it 'returns true if any element of the block satisfies the condition' do
       expect(arr_strings.my_any? { |word| word.length >= 3 }).to eq(true)
@@ -67,7 +68,7 @@ describe 'Enumerable' do
       expect(arr_strings.my_any? { |n| n.size > 3 }).to eq(true)
     end
   end
-
+  # testing code for my_none? method
   describe '#my_none?' do
     it 'returns true if none of the elements are > 0.' do
       expect(arr_num.my_none? { |n| n > 0 }).to eq(false)
