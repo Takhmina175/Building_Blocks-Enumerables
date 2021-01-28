@@ -46,16 +46,15 @@ module Enumerable
 
   # my_all?
   def my_all?(argument = nil)
-    if block_given? && !argument.nil?
-      return false unless my_all?(argument) && my_all?
-    end
+    return false if block_given? && !argument.nil? && !my_all?(argument) && my_all?
+
     if block_given?
       my_each { |item| return false unless yield(item) }
     elsif argument.nil?
       my_each { |item| return false unless item }
     elsif argument.is_a?(Class)
       my_each { |item| return false unless [item.class, item.class.superclass].include?(argument) }
-    elsif argument.class == Regexp
+    elsif argument.instance_of?(Regexp)
       my_each { |item| return false unless argument.match(item.to_s) }
     else
       my_each { |item| return false unless item == argument && item.class <= argument.class }
@@ -65,16 +64,15 @@ module Enumerable
 
   # my_any?
   def my_any?(argument = nil)
-    if block_given? && !argument.nil?
-      return true if my_any?(argument) && my_any?
-    end
+    return true if block_given? && !argument.nil? && my_any?(argument) && my_any?
+
     if block_given?
       my_each { |item| return true if yield(item) }
     elsif argument.nil?
       my_each { |item| return true if item }
     elsif argument.is_a?(Class)
       my_each { |item| return true if [item.class, item.class.superclass].include?(argument) }
-    elsif argument.class == Regexp
+    elsif argument.instance_of?(Regexp)
       my_each { |item| return true if argument.match(item.to_s) }
     else
       my_each { |item| return true if item == argument }
@@ -84,9 +82,8 @@ module Enumerable
 
   # my_none?
   def my_none?(argument = nil)
-    if block_given? && !argument.nil?
-      return true if my_none?(argument) && my_none?
-    end
+    return true if block_given? && !argument.nil? && my_none?(argument) && my_none?
+
     if block_given?
       my_each { |item| return false if yield(item) }
     elsif argument.nil?
@@ -95,7 +92,7 @@ module Enumerable
     elsif argument.is_a?(Class)
       my_each { |item| return false if item.class.is_a?(Class) }
 
-    elsif argument.class == Regexp
+    elsif argument.instance_of?(Regexp)
       my_each { |item| return false if item.match(argument) }
 
     else

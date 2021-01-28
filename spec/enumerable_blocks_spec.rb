@@ -82,4 +82,40 @@ describe 'Enumerable' do
       expect(arr.my_none?(Float)).to eq(false)
     end
   end
+
+  # testing code for my_count method
+  describe '#my_count' do
+    it 'increments the number by one.' do
+      count = 0
+      expect { count += 1 }.to change { count }.from(0).to(1)
+    end
+    it 'returns the number of items in the array.' do
+      expect(arr_num.my_count).to eq(3)
+    end
+    it 'returns the number of even elements.' do
+      arr = [1, 2, 4, 2]
+      expect(arr.my_count(&:even?)).to eq(3)
+    end
+  end
+  # testing code for my_map method
+  describe '#my_map' do
+    it 'returns a new array for every element in the array.' do
+      expect(arr_num.my_map { |n| n * 2 }).to eq([2, 4, 6])
+    end
+    it 'returns a new string of the array.' do
+      expect(arr_strings.my_map { |n| "#{n}!" }).to eq(['ant!', 'bear!', 'cat!'])
+    end
+  end
+  # testing code for my_inject method
+  describe '#my_inject' do
+    it 'Combines all elements of enum by applying a binary operation' do
+      expect(arr_num.my_inject { |sum, n| sum + n }).to eq(6)
+    end
+    it 'Combines all elements in a given range by performing an addition operation.' do
+      expect(range.my_inject { |sum, n| sum + n }).to eq(45)
+    end
+    it 'Combines all elements in a given range by performing an multiplication operation' do
+      expect(range.my_inject(1, :*)).to eq(151_200)
+    end
+  end
 end
